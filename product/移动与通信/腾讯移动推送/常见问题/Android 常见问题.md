@@ -59,7 +59,7 @@ android:value="true" />
 
 | 厂商 | 是否需要上架应用市场 |
 |---------|---------|
-| 小米 | 否，个人开发者账号即可 [开通小米平台推送服务](https://dev.mi.com/console/doc/detail?pId=68) | 
+| 小米 | 是，且需要企业开发者账号可 [开通小米平台推送服务](https://dev.mi.com/console/doc/detail?pId=68) | 
 | 魅族 | 否，个人开发者账号即可 [开通魅族平台推送服务](http://open.res.flyme.cn/fileserver/upload/file/201709/a271468fe23b47408fc2ec1e282f851f.pdf)| 
 | FCM | 否，个人开发者账号即可开通 FCM 推送服务 |
 | 华为 | 否，个人开发者账号即可 [开通华为平台推送服务](https://developer.huawei.com/consumer/cn/doc/distribution/app/agc-enable_service#enable-service) | 
@@ -80,7 +80,7 @@ android:value="true" />
  
 ### 什么是移动推送自建通道？
 
--移动推送自建通道是移动推送的自建通道，依赖移动推送Service 在线（与移动推送后台服务器保持长连接）才能下发消息，因此移动推送自建通道的实际发送一般比其他厂商通道的数据要低。
+- 移动推送自建通道是移动推送的自建通道，依赖移动推送Service 在线（与移动推送后台服务器保持长连接）才能下发消息，因此移动推送自建通道的实际发送一般比其他厂商通道的数据要低。
 - 如果需要实现离线推送，建议集成厂商通道，请参见 [厂商通道接入指南](https://cloud.tencent.com/document/product/548/45909)。
 
 
@@ -88,7 +88,7 @@ android:value="true" />
 ### 为何关闭应用后，无法收到推送？
 
 - 目前第三方推送都无法保证关闭应用后仍可收到推送消息，该问题为手机定制 ROM 对移动推送 Service 的限制问题，移动推送的移动推送自建通道推送，需要建立在移动推送的 Service 能够与移动推送后台服务器保持长连接，Service 被终止后，需由系统、安全软件和用户操作决定是否能够再次启动。
--移动推送的 Service 和移动推送的服务器断开连接后，此时给这个设备下发的消息，将变成离线消息，离线消息最多保存72小时，每个设备最多保存三条，如果有多条离线消息，只保留最新的三条消息。在关闭应用期间推送的消息，如开启应用无法收到，请检查是否调用了反注册接口：XGPushManager.unregisterPush\(this\)。
+- 移动推送的 Service 和移动推送的服务器断开连接后，此时给这个设备下发的消息，将变成离线消息，离线消息最多保存72小时，每个设备最多保存三条，如果有多条离线消息，只保留最新的三条消息。在关闭应用期间推送的消息，如开启应用无法收到，请检查是否调用了反注册接口：XGPushManager.unregisterPush\(this\)。
 - 如果已经集成厂商通道，但是仍收不到离线推送，请先在 [排查工具](https://console.cloud.tencent.com/tpns/user-tools) 上查询该 Token 是否已经注册上厂商通道，如果未注册成功，请参见 [厂商通道注册失败排查指南](https://cloud.tencent.com/document/product/548/45659) 进行排查。
 - QQ 和微信是系统级别的应用白名单，相关的 Service 不会因为关闭应用而退出，所以用户感知推出应用过后，仍可收到消息，但相关的 Service 仍能够在后台存活。
 
@@ -163,18 +163,6 @@ android:value="true" />
 
 表示您的应用注册该厂商通道失败，您可以通过获取厂商通道注册失败的返回码来进行问题定位和排查，详情请参见 [厂商通道注册失败排查指南](https://cloud.tencent.com/document/product/548/45659)。
 
-### 同时集成了即时通信 IM 和 移动推送，存在大量的厂商类冲突，该如何解决？
-
-目前 IM 已使用移动推送提供的厂商 jar 包，请按照下方表格替换相关依赖包，替换后即可解决。
-
- | 推送通道 | 系统要求 | 条件说明 |
- | --------------- | ------| -------------------------------------------- | 
- | 小米推送| MIUI|使用小米推送，添加依赖：`implementation 'com.tencent.tpns:xiaomi:1.2.1.3-release'`|
- | 华为推送| EMUI|使用华为推送，添加依赖：<li>`implementation 'com.tencent.tpns:huawei:1.2.1.3-release'`</li><li>`implementation 'com.huawei.hms:push:5.0.2.300'`</li>| 
-| Google FCM 推送| Android 4.1及以上|手机端需安装 Google Play Services 且在中国大陆地区以外使用。添加依赖：`implementation 'com.google.firebase:firebase-messaging:20.2.3'`| 
-| 魅族推送 | Flyme| 使用魅族推送，添加依赖：`implementation 'com.tencent.tpns:meizu:1.2.1.3-release'` | 
-| OPPO 推送| ColorOS |并非所有 OPPO 机型和版本都支持使用 OPPO 推送，使用 OPPO 推送，添加依赖：`implementation 'com.tencent.tpns:oppo:1.2.1.3-release'`| 
-| vivo 推送| FuntouchOS|并非所有 vivo 机型和版本都支持使用 vivo 推送，使用 vivo 推送，添加依赖：`implementation 'com.tencent.tpns:vivo:1.2.1.3-release'`|
 
 ### 如何适配 small icon 小图标？
 
@@ -194,7 +182,7 @@ android:value="true" />
 }
 ```
 
-适配后的具体效果如下，[建议参考 Demo logo 图标进行作图](https://git.code.tencent.com/tpns/移动推送-Demo-Android/blob/master/app/src/main/res/drawable/notification_icon.png)。
+适配后的具体效果如下，[建议参考 Demo logo 图标进行作图](https://git.code.tencent.com/tpns/tpns-Demo-Android/blob/master/app/src/main/res/drawable/notification_icon.png)。
 
 <img src="https://main.qcloudimg.com/raw/d9f92fb413aa98a01af64b2c17680bef.jpg" width="60%"></img>
 

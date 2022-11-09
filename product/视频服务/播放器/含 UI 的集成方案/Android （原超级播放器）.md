@@ -13,7 +13,7 @@
 1. 如何集成腾讯云视立方 Android 播放器组件
 2. 如何创建和使用播放器
 
-
+ 
 ## 集成准备
 ### 步骤1：项目下载
 腾讯云视立方 Android 播放器组件的项目地址是 [SuperPlayer_Android](https://github.com/LiteAVSDK/Player_Android)。
@@ -51,8 +51,8 @@ remote: Total 2637 (delta 227), reused 524 (delta 170), pack-reused 1993
 | common                      | 工具类模块                                                   |
 | SDK                         | 视立方播放器 SDK，包括：LiteAVSDK_Player_x.x.x.aar，aar 格式提供的 SDK；LiteAVSDK_Player_x.x.x.zip，lib 和 jar 格式提供的 SDK |
 | Player说明文档(Android).pdf | 播放器组件使用文档                                           |
-|:::||
-|</dx-tabs>||
+:::
+</dx-tabs>
 
 ### 步骤2：集成指引
 本步骤可指导您如何集成播放器，您可选择使用 Gradle 自动加载的方式，手动下载 aar 再将其导入到您当前的工程或导入 jar 和 so 库的方式集成项目。
@@ -249,6 +249,7 @@ ndk {
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 
+
 ### 步骤4：设置混淆规则
 在 proguard-rules.pro 文件，将 TRTC SDK 相关类加入不混淆名单：
 ```xml
@@ -302,7 +303,7 @@ URL可以是点播文件播放地址，也可以是直播拉流地址，传入�
 SuperPlayerModel model = new SuperPlayerModel();
 model.appId = 1400329073; // 配置 AppId
 model.url = "http://your_video_url.mp4";   // 配置您的播放视频url
-mSuperPlayerView.playWithModel(model);
+mSuperPlayerView.playWithModelNeedLicence(model);
 ```
 :::
 ::: 通过 FileID 播放（点播）[](id:fileid)
@@ -320,17 +321,21 @@ mSuperPlayerView.playWithModel(model);
 :::  java
 //在未开启防盗链进行播放的过程中，如果出现了“no v4 play info”异常，建议您使用Adaptive-HLS(10)转码模板对视频进行转码，或直接获取源视频播放链接通过url方式进行播放。
 
-SuperPlayerModel *model = [[SuperPlayerModel alloc] init];
+```java
+SuperPlayerModel model = new SuperPlayerModel();
 model.appId = 1400329071;// 配置 AppId
-model.videoId = [[SuperPlayerVideoId alloc] init];
-model.videoId.fileId = @"5285890799710173650"; // 配置 FileId
-//私有加密播放需填写 psign， psign 即播放器组件签名，签名介绍和生成方式参见链接：https://cloud.tencent.com/document/product/266/42436
-//model.videoId.pSign = @"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTQwMDMyOTA3MSwiZmlsZUlkIjoiNTI4NTg5MDc5OTcxMDE3MzY1MCIsImN1cnJlbnRUaW1lU3RhbXAiOjEsImV4cGlyZVRpbWVTdGFtcCI6MjE0NzQ4MzY0NywidXJsQWNjZXNzSW5mbyI6eyJ0IjoiN2ZmZmZmZmYifSwiZHJtTGljZW5zZUluZm8iOnsiZXhwaXJlVGltZVN0YW1wIjoyMTQ3NDgzNjQ3fX0.yJxpnQ2Evp5KZQFfuBBK05BoPpQAzYAWo6liXws-LzU"; 
-[_playerView playWithModel:model];
+model.videoId = new SuperPlayerVideoId();
+model.videoId.fileId = "5285890799710173650"; // 配置 FileId
+// psign 即播放器签名，签名介绍和生成方式参见链接：https://cloud.tencent.com/document/product/266/42436
+model.videoId.pSign = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTQwMDMyOTA3MSwiZmlsZUlkIjoiNTI4NTg5MDc5OTcxMDE3MzY1MCIsImN1cnJlbnRUaW1lU3RhbXAiOjEsImV4cGlyZVRpbWVTdGFtcCI6MjE0NzQ4MzY0NywidXJsQWNjZXNzSW5mbyI6eyJ0IjoiN2ZmZmZmZmYifSwiZHJtTGljZW5zZUluZm8iOnsiZXhwaXJlVGltZVN0YW1wIjoyMTQ3NDgzNjQ3fX0.yJxpnQ2Evp5KZQFfuBBK05BoPpQAzYAWo6liXws-LzU";
+mSuperPlayerView.playWithModelNeedLicence(model);
+```
+
 :::
 </dx-codeblock>
 :::
 </dx-tabs>
+
 3. **退出播放**[](id:exitPlayer)
 当不需要播放器时，调用`resetPlayer`清理播放器内部状态，释放内存。
 ```java
@@ -449,7 +454,7 @@ model.videoId.fileId = "您的fileId";
 model.playAction = PLAY_ACTION_MANUAL_PLAY;
 //设定封面的地址为网络url地址，如果coverPictureUrl不设定，那么就会自动使用云点播控制台设置的封面
 model.coverPictureUrl = "http://1500005830.vod2.myqcloud.com/6c9a5118vodcq1500005830/cc1e28208602268011087336518/MXUW1a5I9TsA.png" 
-mSuperPlayerView.playWithModel(model);
+mSuperPlayerView.playWithModelNeedLicence(model);
 ```
 
 ### 4、视频列表轮播
@@ -479,11 +484,11 @@ model.appid = 1252463788;
 model.videoId.fileId = "4564972819219071679"；
 list.add(model);
 //步骤2：调用轮播接口
-mSuperPlayerView.playWithModelList(list, true, 0);
+mSuperPlayerView.playWithModelListNeedLicence(list, true, 0);
 ```
 
 ```java
-public void playWithModelList(List<SuperPlayerModel> models, boolean isLoopPlayList, int index);
+public void playWithModelListNeedLicence(List<SuperPlayerModel> models, boolean isLoopPlayList, int index);
 ```
 
 接口参数说明
@@ -511,7 +516,7 @@ public void playWithModelList(List<SuperPlayerModel> models, boolean isLoopPlayL
  VipWatchModel vipWatchModel = new VipWatchModel("可试看%ss，开通 VIP 观看完整视频",15);
  mode.vipWatchMode = vipWatchModel;
  //步骤3：调用播放视频方法
- mSuperPlayerView.playWithModel(mode);
+ mSuperPlayerView.playWithModelNeedLicence(mode);
 
  方法二：
  //步骤1：创建试看信息 mode
@@ -546,7 +551,7 @@ VipWatchModel 接口参数说明：
  DynamicWaterConfig dynamicWaterConfig = new DynamicWaterConfig("shipinyun", 30, Color.parseColor("#80FFFFFF"));
  mode.dynamicWaterConfig = dynamicWaterConfig;
  //步骤3：调用播放视频方法
- mSuperPlayerView.playWithModel(mode);
+ mSuperPlayerView.playWithModelNeedLicence(mode);
 
  方法二：
  //步骤1：创建水印信息mode
@@ -567,7 +572,139 @@ public DynamicWaterConfig(String dynamicWatermarkTip, int tipTextSize, int tipTe
 | tipTextSize         | int    | 文字大小   |
 | tipTextColor        | int    | 文字颜色   |
 
+### 7、视频下载
+
+支持用户在有网络的条件下缓存视频，随后在无网络的环境下观看；同时离线缓存的视频仅可在客户端内观看，不可被下载至本地，可有效防止下载视频的非法传播，保护视频安全。
+你可在 腾讯云视立方 App > 播放器 > 播放器组件 > 离线缓存（全屏）演示视频中，使用全屏观看模式后体验。
+![](https://qcloudimg.tencent-cloud.cn/raw/d5e47d5d2a50b98a4a2cf04fbfa523b7.png)
+
+DownloadMenuListView（ 缓存选择列表视图），用于选择下载对应清晰度的视频。左上角选择清晰度后，再点击要下载的视频选项，出现对勾后，代表开始了下载。点击下方的 video download list 按钮后会跳转到 VideoDownloadListView 所在的 Activity。
+
+```java
+// 步骤1：初始化下载数据 参数见下方列表
+DownloadMenuListView mDownloadMenuView = findViewById(R.id.superplayer_cml_cache_menu);
+mDownloadMenuView.initDownloadData(superPlayerModelList, mVideoQualityList, mDefaultVideoQuality, "default");
+ 
+// 步骤2：设置正在播放的视频选项
+mDownloadMenuView.setCurrentPlayVideo(mSuperplayerModel);
+
+// 步骤3：设置video download list 按钮的点击事件
+mDownloadMenuView.setOnCacheListClick(new OnClickListener() {
+     @Override
+     public void onClick(View v) {
+       // 跳转到 VideoDownloadListView 所在的 Activity
+       startActivity(DownloadMeduListActivity.this,VideoDownloadListActivity.class);
+     }
+});
+
+// 步骤4:通过动画展示view
+mDownloadMenuView.show();
+```
+
+```java
+public void initDownloadData(List<SuperPlayerModel> superPlayerModelList,
+                             List<VideoQuality> qualityList,
+                             VideoQuality currentQuality,
+                             String userName)
+```
+
+接口参数说明
+
+| 参数名               | 类型                   | 描述             |
+| -------------------- | ---------------------- | ---------------- |
+| superPlayerModelList | List<SuperPlayerModel> | 下载的视频数据   |
+| qualityList          | List<VideoQuality>     | 视频清晰度数据   |
+| currentQuality       | VideoQuality           | 当前的视频清晰度 |
+| userName             | String                 | 用户名           |
+
+VideoDownloadListView（视频下载列表），显示所有正在下载的和下载完成视频的列表 View。点击时，如果正在下载，会暂停下载；如果暂时下载，会继续下载；如果下载完成，会跳转播放。
+
+<img src="http://1400155958.vod2.myqcloud.com/facd87c8vodcq1400155958/a69c6b2c387702307128674240/wt31IYPsdQoA.jpg" style="zoom: 33%;" />
+
+
+
+```java
+// 步骤1：绑定控件
+VideoDownloadListView mVideoDownloadListView = findViewById(R.id.video_download_list_view);
+
+//步骤2: 添加数据  
+mVideoDownloadListView.addCacheVideo(mDataList, true);
+
+```
+
+接口参数说明
+
+```
+public void addCacheVideo(List<TXVodDownloadMediaInfo> mediaInfoList, boolean isNeedClean)；
+```
+
+| 参数名        | 类型                         | 描述               |
+| ------------- | ---------------------------- | ------------------ |
+| mediaInfoList | List<TXVodDownloadMediaInfo> | 添加的视频数据类型 |
+| isNeedClean   | boolean                      | 是否清除之前的数据 |
+
+
+
+### 8、雪碧图和打点信息
+
+#### 打点信息
+
+支持在进度条关键位置添加文字介绍，用户点击后可显示打点位置的文字信息，以快速了解当前位置的视频信息。点击视频信息后，可以seek到打点信息位置。
+
+您可在腾讯云视立方 App > 播放器 > 播放器组件 > 腾讯云 视频中，使用全屏观看模式后体验。
+
+![](http://1500005830.vod2.myqcloud.com/6c9a5118vodcq1500005830/9f41662a387702307128322419/WnDHUMF9V3YA.jpg)
+
+#### 雪碧图
+
+支持用户在拖拽进度条或执行快进操作时查看视频缩略图，以快速了解指定进度的视频内容。缩略图预览基于视频雪碧图实现，您可以在云点播控制台中生成视频文件雪碧图，或直接生成雪碧图文件。
+您可在腾讯云视立方 App > 播放器 > 播放器组件 > 腾讯云 视频中，使用全屏观看模式后体验。
+
+![](http://1500005830.vod2.myqcloud.com/6c9a5118vodcq1500005830/ad1f6b93387702307128908283/6YIALRXty4EA.jpg)
+
+```java
+// 步骤1：播放视频 superplayerModel的url变量需要为空，且videoId不为空，这样才会通过PlayWithField播放，才能在onPlayEvent回调中获取到 关键帧 雪碧图 数据
+mSuperplayerView.play(superplayerModel);
+
+// 步骤2: PlayWithFileId播放时候 在 VOD_PLAY_EVT_GET_PLAYINFO_SUCC 回调事件 中取得关键帧 雪碧图信息
+public void onPlayEvent(TXVodPlayer player, int event, Bundle param) {
+    switch (event) {
+        case TXVodConstants.VOD_PLAY_EVT_GET_PLAYINFO_SUCC:
+    
+            // 获取 雪碧图 图片链接URL
+            playImageSpriteInfo.imageUrls = param.getStringArrayList(TXVodConstants.EVT_IMAGESPRIT_IMAGEURL_LIST);
+            // 获取 雪碧图 web vtt描述文件下载URL
+            playImageSpriteInfo.webVttUrl = param.getString(TXVodConstants.EVT_IMAGESPRIT_WEBVTTURL);
+            // 获取 关键帧内容信息    
+           ArrayList<String> keyFrameContentList =
+                    param.getStringArrayList(TXVodConstants.EVT_KEY_FRAME_CONTENT_LIST);
+            // 获取 关键帧时间信息
+            float[] keyFrameTimeArray = param.getFloatArray(TXVodConstants.EVT_KEY_FRAME_TIME_LIST);
+        
+            // 构建 关键帧数据列表
+            if (keyFrameContentList != null && keyFrameTimeArray != null
+                    && keyFrameContentList.size() == keyFrameTimeArray.length) {
+                for (int i = 0; i < keyFrameContentList.size(); i++) {
+                    PlayKeyFrameDescInfo frameDescInfo = new PlayKeyFrameDescInfo();
+                    frameDescInfo.content = keyFrameContentList.get(i);
+                    frameDescInfo.time = keyFrameTimeArray[i];
+                    mKeyFrameDescInfoList.add(frameDescInfo);
+                }
+            }
+            break;
+        default:
+            break;
+　　}
+}
+
+// 步骤3: 将拿到的关键帧 雪碧图信息通过updateVideoImageSpriteAndKeyFrame方法赋值给对应的view。 
+// 雪碧图的view对应VideoProgressLayout组件中mIvThumbnail。
+// 关键帧的view对应PointSeekBar组件中的TCPointView。
+updateVideoImageSpriteAndKeyFrame(playImageSpriteInfo,keyFrameDescInfoList);
+```
+
 [](id:demo)
+
 ## Demo 体验
 
 更多完整功能可直接运行工程 Demo，或扫码下载移动端 Demo 腾讯云视立方 App 体验。

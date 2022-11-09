@@ -1,9 +1,9 @@
-腾讯云云服务器（Cloud Virtual Machine，CVM）是腾讯云提供的可扩展的计算服务。使用云服务器 CVM 避免了使用传统服务器时需要预估资源用量及前期投入，帮助您在短时间内快速启动任意数量的云服务器并即时部署应用程序。
+云服务器（Cloud Virtual Machine，CVM）是腾讯云提供的可扩展的计算服务。使用云服务器避免了使用传统服务器时需要预估资源用量及前期投入，帮助您在短时间内快速启动任意数量的云服务器并即时部署应用程序。
 
-本文为您介绍如何从零开始，以最简单的方式搭建一个 Windows 云服务器。您可按照以下文档，购买和配置您的第一台云服务器。若想了解搭建 Linux 云服务器的入门教程，可以参考 [快速配置 Linux 云服务器]()。
+本文为您介绍如何从零开始，以最简单的方式搭建一个 Windows 云服务器。您可按照以下文档，购买和配置您的第一台云服务器。若想了解搭建 Linux 云服务器的入门教程，可以参考 [快速配置 Linux 云服务器](https://cloud.tencent.com/document/product/1003/79661)。
 
 ## 前提条件
-已注册腾讯云账号，详细方法请参见 [注册腾讯云账号](https://cloud.tencent.com/document/product/378/17985)。
+已注册腾讯云账号，详细方法请参见 [注册腾讯云账号](https://cloud.tencent.com/document/product/1003/79164)。
 
 ## 配置 Windows 云服务器
 >!为确保成功连接到 TDSQL-C MySQL 版，建议购买的云服务器 CVM 与 TDSQL-C MySQL 版满足以下几点：
@@ -78,3 +78,4 @@
 5. 单击**登录**，即可登录 Windows 实例。
 本文以登录操作系统为 Windows Server 2016 数据中心版64位中文版的云服务器为例，登录成功则出现类似如下图所示界面：
 ![](https://main.qcloudimg.com/raw/a68deed91b8d73db1e6b2f931c6689c1.png)
+

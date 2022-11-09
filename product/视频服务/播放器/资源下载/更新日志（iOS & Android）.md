@@ -5,6 +5,38 @@
 
 ## 播放器 SDK
 
+### 播放器 SDK 10.8 @ 2022.10.27
+**功能优化:**
+- Android&iOS：循环播放单轮结束增加 VOD_PLAY_EVT_LOOP_ONCE_COMPLETE 事件
+-  Android：合规优化启动时调用2次：NetworkInfo.getExtraInfo 问题
+ 
+**缺陷修复**: 
+- Android&iOS：修复特殊场景导致私有加密视频播放失败问题
+- Andoird&iOS：修复部分视频通过 gzip 传输播放失败问题
+- Andoird&iOS：修复播放结束后进度条时长不匹配问题
+- iOS：修复 appid&fileid 播放 v2 协议取视频源地址错误问题
+
+
+### 播放器 SDK 10.7 @ 2022.09.20
+
+**功能优化:**
+
+- Android&iOS：点播播放 startPlay 接口变更为 startVodPlay
+- Android&iOS： 直播播放 startPlay 接口变更为 startLivePlay
+- iOS：修复长时间退到后台，返回播放器，无法继续播放的问题
+- Android： 修复低版本 Android 系统部分视频播放失败问题
+
+### 播放器 SDK 10.6 @ 2022.08.31
+
+**功能优化:** 
+
+- Android&iOS：fileid 播放方式新增雪碧图、URL 等信息回调
+- Android&iOS：包体大小优化
+
+**缺陷修复:** 
+
+-  iOS：修复部分场景下私有加密视频离线下载播放失败问题
+
 ### 播放器 SDK 10.5 @ 2022.08.12
 **缺陷修复**: 
 - Android&iOS：修复播放失败不带视频格式后缀短链异常

@@ -7,34 +7,34 @@
 > - 如您当前使用的版本和最新版本跨度较大，请务必参考下方涉及版本的变更内容进行配置修改。
 > - 如无特殊情况，建议您对来自移动推送SDK 的各厂商推送 SDK 依赖版本号也同步进行升级修改。
 
-例如，当前使用的版本号为 1.3.3.3，最新版本号为 1.3.5.0，则将使用的推送 SDK 依赖版本号从 1.3.3.3 修改为 1.3.5.0：
+例如，当前使用的版本号为 1.3.3.3，最新版本号为 1.3.6.1，则将使用的推送 SDK 依赖版本号从 1.3.3.3 修改为 1.3.6.1：
 ```
 dependencies {
     //移动推送主包
-    implementation "com.tencent.tpns:tpns:1.3.5.0-release"
+    implementation "com.tencent.tpns:tpns:1.3.6.1-release"
 
     // 小米推送依赖包
-    implementation "com.tencent.tpns:xiaomi:1.3.5.0-release"
+    implementation "com.tencent.tpns:xiaomi:1.3.6.1-release"
 
     // 魅族推送依赖包
-    implementation "com.tencent.tpns:meizu:1.3.5.0-release"
+    implementation "com.tencent.tpns:meizu:1.3.6.1-release"
     
     // 华为推送依赖包
-    implementation "com.tencent.tpns:huawei:1.3.5.0-release"
+    implementation "com.tencent.tpns:huawei:1.3.6.1-release"
     // 华为推送 HMS Core Push 模块依赖包
     implementation 'com.huawei.hms:push:6.5.0.300'       
 
     // OPPO 推送依赖包
-    implementation "com.tencent.tpns:oppo:1.3.5.0-release"
+    implementation "com.tencent.tpns:oppo:1.3.6.1-release"
     // 自 SDK 1.3.2.0 起，需一并加入以下依赖语句，否则可能导致 OPPO 推送注册失败
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'commons-codec:commons-codec:1.15'
 
     // vivo 推送依赖包
-    implementation "com.tencent.tpns:vivo:1.3.5.0-release"
+    implementation "com.tencent.tpns:vivo:1.3.6.1-release"
 
     // 荣耀推送依赖包
-    implementation "com.tencent.tpns:honor:1.3.5.0-release"
+    implementation "com.tencent.tpns:honor:1.3.6.1-release"
 }
 ```
 
@@ -46,14 +46,22 @@ dependencies {
 
 >! 
 > - 如您当前使用的版本和最新版本跨度较大，请务必参考下方涉及版本的变更内容进行配置修改。
-> - 如无特殊情况，建议您对来自移动推送SDK 的各厂商推送 SDK 依赖包也同步进行升级替换。
+> - 如无特殊情况，建议您对来自移动推送 SDK 的各厂商推送 SDK 依赖包也同步进行升级替换。
 
 
 ### 通过其他合集工具包集成
 若您的工程通过其他三方合集工具包集成（如 MSDK、GCloud 等），请优先参考合集工具包提供的升级指南。
 
+## 移动推送 Android SDK 1.3.6.1
+移动推送 1.3.6.1 升级了小米、OPPO 厂商推送依赖版本，目前使用的各厂商推送 SDK 原始版本如下：
+- 华为 : 6.5.0.300
+- 小米 : 5.0.8
+- 魅族 : 4.1.0
+- OPPO : 3.1.0
+- vivo :  3.0.0.4
+
 ## 移动推送 Android SDK 1.3.2.0
-移动推送1.3.2.0 升级了各厂商推送依赖版本，版本详情如下：
+移动推送 1.3.2.0 升级了各厂商推送依赖版本，版本详情如下：
 - 华为 : 6.3.0.302
 - 小米 : 4.9.1
 - 魅族 : 4.1.0
@@ -91,7 +99,7 @@ implementation 'commons-codec:commons-codec:1.15'
 package com.meizu.cloud.pushinternal;
 public class R {
     public static final class drawable {
-		    // 资源文件 stat_sys_third_app_notify.png 请从移动推送SDK 压缩包魅族厂商依赖目录的 flyme-notification-res 文件夹获取，并复制到应用自己的资源目录下
+		    // 资源文件 stat_sys_third_app_notify.png 请从移动推送 SDK 压缩包魅族厂商依赖目录的 flyme-notification-res 文件夹获取，并复制到应用自己的资源目录下
         public static final int stat_sys_third_app_notify = com.tencent.android.tpns.demo.R.drawable.stat_sys_third_app_notify;
     }
 }
@@ -124,7 +132,7 @@ class R {
 }
 ```
 
-2. 请将移动推送SDK 压缩包 OPPO 厂商依赖目录的 jar 文件 commons-codec-1.15.jar、gson-2.6.2-sources.jar 新增复制到工程 app 模块 libs 目录下并引入工程，否则可能导致 OPPO 推送注册失败：
+2. 请将移动推送 SDK 压缩包 OPPO 厂商依赖目录的 jar 文件 commons-codec-1.15.jar、gson-2.6.2-sources.jar 新增复制到工程 app 模块 libs 目录下并引入工程，否则可能导致 OPPO 推送注册失败：
 ```groovy
 implementation files('libs/gson-2.6.2-sources.jar')
 implementation files('libs/commons-codec-1.15.jar')
@@ -163,7 +171,7 @@ implementation files('libs/commons-codec-1.15.jar')
         android:launchMode="singleInstance"
         android:theme="@android:style/Theme.Translucent.NoTitleBar">
         <intent-filter>
-            <action android:name="${applicationId}.OPEN_移动推送_ACTIVITY_V2" />
+            <action android:name="${applicationId}.OPEN_TPNS_ACTIVITY_V2" />
 
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
@@ -280,7 +288,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     <activity android:name="com.tencent.android.tpush.TpnsActivity"
         android:theme="@android:style/Theme.Translucent.NoTitleBar">
         <intent-filter>
-            <action android:name="${applicationId}.OPEN_移动推送_ACTIVITY" />
+            <action android:name="${applicationId}.OPEN_TPNS_ACTIVITY" />
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         <intent-filter>
